@@ -668,14 +668,20 @@ def main() -> None:
     with tab_info:
         render_model_info_tab(bundle, metrics, temporal)
 
-def main() -> None:
-    # --- RENTGEN (Vlož přímo sem) ---
-    st.error("RENTGEN: Co vidí Streamlit?")
-    st.code(f"Obsah hlavní složky: {os.listdir(ROOT)}")
-    st.code(f"Hledám model na adrese: {MODEL_PATH}")
+# --- RENTGEN 2.0 ---
+    st.error("RENTGEN 2.0: Detail modelů")
+    try:
+        st.code(f"Obsah složky models: {os.listdir(ROOT / 'models')}")
+        st.code(f"Existuje best_model?: {(ROOT / 'models' / 'best_model.joblib').exists()}")
+        st.code(f"Existuje pipeline?: {(ROOT / 'models' / 'feature_pipeline.joblib').exists()}")
+        
+        # Zkusíme ho cvičně načíst, jestli nepadne na verzi knihovny
+        import joblib
+        joblib.load(ROOT / 'models' / 'best_model.joblib')
+        st.success("Model se podařilo úspěšně načíst do paměti!")
+    except Exception as e:
+        st.error(f"CHYBA při čtení modelu: {e}")
     # --------------------------------
-    
-    st.set_page_config(page_title="Smart Parking Melbourne", layout="wide")
 
 if __name__ == "__main__":
     main()
