@@ -176,6 +176,52 @@ def render_map_tab(bundle: dict) -> None:
 
     preds = predict_clusters(bundle, weekday, hour, month)
 
+    st.markdown(
+        """
+        <style>
+        .sp-legend {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 0.6rem;
+            border-radius: 0.6rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #111827;
+            border: 1px solid #e5e7eb;
+            font-size: 0.88rem;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .sp-legend-dot {
+            display: inline-block;
+            width: 0.8rem;
+            height: 0.8rem;
+            border-radius: 999px;
+            flex: 0 0 auto;
+        }
+
+        .sp-legend-note {
+            margin-top: 0.5rem;
+            color: #6b7280;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .sp-legend {
+                background: rgba(17, 24, 39, 0.92);
+                color: #f9fafb;
+                border-color: rgba(255, 255, 255, 0.14);
+            }
+
+            .sp-legend-note {
+                color: #9ca3af;
+            }
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
     legend_items = [
         ("< 30%", "#2ecc71"),
         ("30% - 50%", "#a6e22e"),
@@ -189,33 +235,18 @@ def render_map_tab(bundle: dict) -> None:
         with col:
             st.markdown(
                 f"""
-                <div style="
-                    display: flex;
-                    align-items: center;
-                    gap: 0.45rem;
-                    padding: 0.45rem 0.6rem;
-                    border-radius: 0.6rem;
-                    background: rgba(255, 255, 255, 0.9);
-                    border: 1px solid #e5e7eb;
-                    font-size: 0.88rem;
-                    line-height: 1.2;
-                    white-space: nowrap;
-                ">
-                    <span style="
-                        display: inline-block;
-                        width: 0.8rem;
-                        height: 0.8rem;
-                        border-radius: 999px;
-                        background: {color};
-                        flex: 0 0 auto;
-                    "></span>
+                <div class="sp-legend">
+                    <span class="sp-legend-dot" style="background: {color};"></span>
                     <span>{label}</span>
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
 
-    st.caption("Marker size scales with predicted occupancy probability.")
+    st.markdown(
+        "<div class='sp-legend-note'>Marker size scales with predicted occupancy probability.</div>",
+        unsafe_allow_html=True,
+    )
 
     fmap = folium.Map(location=MELBOURNE_CBD, zoom_start=14,
                       tiles="cartodbpositron")
