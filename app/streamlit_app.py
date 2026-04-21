@@ -176,6 +176,47 @@ def render_map_tab(bundle: dict) -> None:
 
     preds = predict_clusters(bundle, weekday, hour, month)
 
+    legend_items = [
+        ("< 30%", "#2ecc71"),
+        ("30% - 50%", "#a6e22e"),
+        ("50% - 70%", "#f1c40f"),
+        ("70% - 85%", "#f39c12"),
+        ("> 85%", "#e74c3c"),
+    ]
+
+    legend_cols = st.columns(len(legend_items))
+    for col, (label, color) in zip(legend_cols, legend_items):
+        with col:
+            st.markdown(
+                f"""
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    gap: 0.45rem;
+                    padding: 0.45rem 0.6rem;
+                    border-radius: 0.6rem;
+                    background: rgba(255, 255, 255, 0.9);
+                    border: 1px solid #e5e7eb;
+                    font-size: 0.88rem;
+                    line-height: 1.2;
+                    white-space: nowrap;
+                ">
+                    <span style="
+                        display: inline-block;
+                        width: 0.8rem;
+                        height: 0.8rem;
+                        border-radius: 999px;
+                        background: {color};
+                        flex: 0 0 auto;
+                    "></span>
+                    <span>{label}</span>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+    st.caption("Marker size scales with predicted occupancy probability.")
+
     fmap = folium.Map(location=MELBOURNE_CBD, zoom_start=14,
                       tiles="cartodbpositron")
     for _, row in preds.iterrows():
@@ -189,31 +230,6 @@ def render_map_tab(bundle: dict) -> None:
             popup=(f"Cluster {int(row['cluster'])}<br>"
                    f"Predicted occupancy: {prob:.0%}"),
         ).add_to(fmap)
-
-    legend_html = """
-    <div style="
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        z-index: 1000;
-        background: rgba(255, 255, 255, 0.95);
-        border: 1px solid #d9d9d9;
-        border-radius: 8px;
-        box-shadow: 0 1px 6px rgba(0,0,0,0.2);
-        padding: 10px 12px;
-        font-size: 12px;
-        line-height: 1.4;
-    ">
-        <div style="font-weight: 600; margin-bottom: 6px;">Predicted occupancy</div>
-        <div><span style="display:inline-block;width:10px;height:10px;background:#2ecc71;border-radius:50%;margin-right:6px;"></span>&lt; 30%</div>
-        <div><span style="display:inline-block;width:10px;height:10px;background:#a6e22e;border-radius:50%;margin-right:6px;"></span>30% - 50%</div>
-        <div><span style="display:inline-block;width:10px;height:10px;background:#f1c40f;border-radius:50%;margin-right:6px;"></span>50% - 70%</div>
-        <div><span style="display:inline-block;width:10px;height:10px;background:#f39c12;border-radius:50%;margin-right:6px;"></span>70% - 85%</div>
-        <div><span style="display:inline-block;width:10px;height:10px;background:#e74c3c;border-radius:50%;margin-right:6px;"></span>&gt; 85%</div>
-        <div style="margin-top: 6px; color: #666;">Marker size scales with probability</div>
-    </div>
-    """
-    fmap.get_root().html.add_child(folium.Element(legend_html))
 
     st_folium(fmap, width=900, height=550, returned_objects=[])
 
