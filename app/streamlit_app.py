@@ -683,6 +683,5 @@ def main() -> None:
     with tab_info:
         render_model_info_tab(bundle, metrics, temporal)
 
-
 if __name__ == "__main__":
     main()
