@@ -668,6 +668,14 @@ def main() -> None:
     with tab_info:
         render_model_info_tab(bundle, metrics, temporal)
 
+def main() -> None:
+    # --- RENTGEN (Vlož přímo sem) ---
+    st.error("RENTGEN: Co vidí Streamlit?")
+    st.code(f"Obsah hlavní složky: {os.listdir(ROOT)}")
+    st.code(f"Hledám model na adrese: {MODEL_PATH}")
+    # --------------------------------
+    
+    st.set_page_config(page_title="Smart Parking Melbourne", layout="wide")
 
 if __name__ == "__main__":
     main()
