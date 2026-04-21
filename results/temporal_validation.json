@@ -1,0 +1,36 @@
+{
+  "dataset": "data\\processed\\occupancy_snapshots_jan.parquet",
+  "model": "models\\best_model.joblib",
+  "model_class": "hist_gradient_boosting",
+  "cutoff": "2019-01-22T00:00:00",
+  "slot_min": "2019-01-01T00:00:00",
+  "slot_max": "2019-01-31T23:30:00",
+  "train_weeks_1_3": {
+    "auc_roc": 0.7585887427346153,
+    "accuracy": 0.893581393942372,
+    "precision": 0.9011466046446612,
+    "recall": 0.9885211198616571,
+    "f1": 0.9428138494724997,
+    "n": 264559,
+    "positive_rate": 0.8874353168858364
+  },
+  "test_week_4": {
+    "auc_roc": 0.7461618206394869,
+    "accuracy": 0.8469156398104265,
+    "precision": 0.8469022926817967,
+    "recall": 0.9967101376834644,
+    "f1": 0.9157196890629306,
+    "n": 131875,
+    "positive_rate": 0.8343886255924171
+  },
+  "all_january": {
+    "auc_roc": 0.7494408353284626,
+    "accuracy": 0.8780578860541729,
+    "precision": 0.8829971941029656,
+    "recall": 0.9911343506934173,
+    "f1": 0.9339460221682954,
+    "n": 396434,
+    "positive_rate": 0.8697891704546028
+  },
+  "note": "Pre-trained 3-month model evaluated on January. No retraining. test_week_4 AUC is the temporal-generalization metric on known locations."
+}

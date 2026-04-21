@@ -1,0 +1,43 @@
+# Data
+data/
+*.csv
+*.parquet
+
+# Models
+models/*.joblib
+models/*.pkl
+
+# Environment
+.env
+.env.example
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Local notes
+/notes/
+*.local.md
