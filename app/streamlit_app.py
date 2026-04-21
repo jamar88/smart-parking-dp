@@ -43,7 +43,8 @@ from streamlit_folium import st_folium
 # ---------------------------------------------------------------------------
 # Project root on path so we can import ``src.*``
 # ---------------------------------------------------------------------------
-ROOT = Path(__file__).resolve().parents[1]
+# ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
