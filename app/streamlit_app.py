@@ -43,7 +43,8 @@ from streamlit_folium import st_folium
 # ---------------------------------------------------------------------------
 # Project root on path so we can import ``src.*``
 # ---------------------------------------------------------------------------
-ROOT = Path(__file__).resolve().parents[1]
+# ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -666,6 +667,15 @@ def main() -> None:
         render_assistant_tab(bundle, metrics, temporal)
     with tab_info:
         render_model_info_tab(bundle, metrics, temporal)
+
+def main() -> None:
+    # --- RENTGEN (Vlož přímo sem) ---
+    st.error("RENTGEN: Co vidí Streamlit?")
+    st.code(f"Obsah hlavní složky: {os.listdir(ROOT)}")
+    st.code(f"Hledám model na adrese: {MODEL_PATH}")
+    # --------------------------------
+    
+    st.set_page_config(page_title="Smart Parking Melbourne", layout="wide")
 
 if __name__ == "__main__":
     main()
