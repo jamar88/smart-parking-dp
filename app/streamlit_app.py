@@ -43,8 +43,7 @@ from streamlit_folium import st_folium
 # ---------------------------------------------------------------------------
 # Project root on path so we can import ``src.*``
 # ---------------------------------------------------------------------------
-# ROOT = Path(__file__).resolve().parents[1]
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -667,21 +666,6 @@ def main() -> None:
         render_assistant_tab(bundle, metrics, temporal)
     with tab_info:
         render_model_info_tab(bundle, metrics, temporal)
-
-# --- RENTGEN 2.0 ---
-    st.error("RENTGEN 2.0: Detail modelů")
-    try:
-        st.code(f"Obsah složky models: {os.listdir(ROOT / 'models')}")
-        st.code(f"Existuje best_model?: {(ROOT / 'models' / 'best_model.joblib').exists()}")
-        st.code(f"Existuje pipeline?: {(ROOT / 'models' / 'feature_pipeline.joblib').exists()}")
-        
-        # Zkusíme ho cvičně načíst, jestli nepadne na verzi knihovny
-        import joblib
-        joblib.load(ROOT / 'models' / 'best_model.joblib')
-        st.success("Model se podařilo úspěšně načíst do paměti!")
-    except Exception as e:
-        st.error(f"CHYBA při čtení modelu: {e}")
-    # --------------------------------
 
 if __name__ == "__main__":
     main()
