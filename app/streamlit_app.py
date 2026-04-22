@@ -38,7 +38,6 @@ import streamlit as st
 import streamlit.components.v1
 from dotenv import load_dotenv
 from folium.plugins import MarkerCluster
-from streamlit_folium import st_folium
 
 # ---------------------------------------------------------------------------
 # Project root on path so we can import ``src.*``
@@ -262,7 +261,7 @@ def render_map_tab(bundle: dict) -> None:
                    f"Predicted occupancy: {prob:.0%}"),
         ).add_to(fmap)
 
-    st_folium(fmap, width=900, height=550, returned_objects=[])
+    st.components.v1.html(fmap._repr_html_(), height=560, scrolling=True)
 
     with st.expander("Cluster predictions (table)"):
         st.dataframe(
